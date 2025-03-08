@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { Schema, model } from 'mongoose';
-import { TUser, UserModel, UserRole } from './user.interface';
+import { IUser, UserModel, UserRole } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 import AppError from '../../middlewares/AppError';
 import httpStatus from 'http-status';
 
-const userSchema = new Schema<TUser>(
+const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -89,4 +89,4 @@ userSchema.statics.checkUserExist = async function (userId: string) {
   return existingUser;
 };
 
-export const User = model<TUser, UserModel>('User', userSchema);
+export const User = model<IUser, UserModel>('User', userSchema);

@@ -1,13 +1,13 @@
 import AppError from '../../middlewares/AppError';
 import { User } from '../user/user.module';
-import { TProfile } from './profile.interface';
+import { IProfile } from './profile.interface';
 import httpStatus from 'http-status';
 import { Profile } from './profile.module';
 
 const updateProfileIntoDB = async (
   userId: string,
   paramsId: string,
-  payload: Partial<TProfile>,
+  payload: Partial<IProfile>,
 ) => {
   try {
     // Step 1: Find the user
@@ -71,13 +71,16 @@ const getUserSingleProfileIntoDB = async (id: string) => {
   return result;
 };
 const getAllUserProfileIntoDB = async () => {
-  const result = await Profile.find({});
+  const result = await Profile.find({}).populate("userId");
+  return result;
+};
+
+const getAllTutorProfileIntoDB = async () => {
+  const result = await Profile.find({ role: 'tutor' }).populate("userId");
   return result;
 };
 
 const updateUserRoleIntoDB = async (id: string, newRole: string) => {
-  console.log(id, newRole);
-
   // Find profile by ID
   const profile = await Profile.findById(id);
   if (!profile) {
@@ -105,7 +108,7 @@ const updateUserRoleIntoDB = async (id: string, newRole: string) => {
   // Update the Profile role
   const updatedProfile = await Profile.findByIdAndUpdate(
     id,
-    { role: newRole, requestRole: null },
+    { role: newRole, requestRole: null, isVerified: true },
     { new: true },
   );
 
@@ -125,4 +128,5 @@ export const ProfileService = {
   getUserSingleProfileIntoDB,
   getAllUserProfileIntoDB,
   updateUserRoleIntoDB,
+  getAllTutorProfileIntoDB,
 };

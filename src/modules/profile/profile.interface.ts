@@ -1,35 +1,35 @@
 import { Types } from 'mongoose';
 import { UserRole } from '../user/user.interface';
 
-export type TReview = {
+export interface IReview {
   studentId: Types.ObjectId;
   comment: string;
   rating: number;
   createdAt?: Date;
 }
 
-export type TAvailability = {
-  day: string; 
-  startTime: string;
-  endTime: string;
+export interface IAvailability {
+  day: string; // Example: "Monday"
+  startTime: string; // Example: "10:00 AM"
+  endTime: string; // Example: "4:00 PM"
 }
 
-export type TRates = {
+export interface IRates {
   hourlyRate: number;
-  discount?: number;
+  discount?: number; // Optional discount for bulk hours (percentage)
 }
 
-export type TProfile = {
+export interface IProfile {
   userId: Types.ObjectId;
   image?: string;
   bio?: string;
   subjects: string[];
   role: UserRole;
   experience?: number;
-  rates: TRates;
-  availability: TAvailability[];
+  rates: IRates;
+  availability: IAvailability[];
   ratings?: number;
-  reviews: TReview[];
+  reviews: IReview[];
   requestRole?: UserRole;
   isVerified?: boolean;
   callToAction?: string;

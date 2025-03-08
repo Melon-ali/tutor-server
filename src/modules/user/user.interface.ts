@@ -7,7 +7,7 @@ export enum UserRole {
   TUTOR = 'tutor',
 }
 
-export type TUser = {
+export interface IUser {
   _id: string;
   name: string;
   email: string;
@@ -16,14 +16,14 @@ export type TUser = {
   status: 'in-progress' | 'blocked';
 }
 
-export interface UserModel extends Model<TUser> {
+export interface UserModel extends Model<IUser> {
   isPasswordMatched(
     plainTextPassword: string,
     hashedPassword: string,
   ): Promise<boolean>;
-  isUserExistsByEmail(email: string): Promise<TUser>;
-  checkUserExist(userId: string): Promise<TUser>;
-  isUserExistsByCustomId(id: string): Promise<TUser>;
+  isUserExistsByEmail(email: string): Promise<IUser>;
+  checkUserExist(userId: string): Promise<IUser>;
+  isUserExistsByCustomId(id: string): Promise<IUser>;
 }
 
 export type TUserRole = keyof typeof USER_ROLE;

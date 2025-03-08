@@ -4,10 +4,10 @@ import httpStatus from 'http-status';
 import { createToken } from './auth.utils';
 import config from '../../config';
 import mongoose from 'mongoose';
-import { TUser } from '../user/user.interface';
-import { TJwtPayload } from './auth.interface';
+import { IUser } from '../user/user.interface';
+import { IJwtPayload } from './auth.interface';
 
-const loginUser = async (payload: TUser) => {
+const loginUser = async (payload: IUser) => {
   const session = await mongoose.startSession();
 
   try {
@@ -22,7 +22,7 @@ const loginUser = async (payload: TUser) => {
       throw new AppError(httpStatus.FORBIDDEN, 'Password does not match');
     }
 
-    const jwtPayload: TJwtPayload = {
+    const jwtPayload: IJwtPayload = {
       userId: user._id as string,
       name: user.name as string,
       email: user.email as string,

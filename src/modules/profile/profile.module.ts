@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
-import { TProfile } from './profile.interface';
+import { IProfile } from './profile.interface';
 import { UserRole } from '../user/user.interface';
 
-const ProfileSchema = new Schema<TProfile>(
+const ProfileSchema = new Schema<IProfile>(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -10,7 +10,8 @@ const ProfileSchema = new Schema<TProfile>(
       required: true,
     },
     image: {
-      type: String, // Profile picture URL
+      type: String,
+      default: null, // Profile picture URL
     },
     bio: {
       type: String,
@@ -31,7 +32,6 @@ const ProfileSchema = new Schema<TProfile>(
     rates: {
       hourlyRate: {
         type: Number,
-        required: true,
         min: 0,
       },
       discount: {
@@ -72,7 +72,7 @@ const ProfileSchema = new Schema<TProfile>(
     requestRole: {
       type: String,
       enum: [UserRole.TUTOR, UserRole.STUDENT],
-      default: UserRole.STUDENT,
+      default: null,
     },
     isVerified: {
       type: Boolean,
@@ -89,4 +89,4 @@ const ProfileSchema = new Schema<TProfile>(
   },
 );
 
-export const Profile = model<TProfile>('Profile', ProfileSchema);
+export const Profile = model<IProfile>('Profile', ProfileSchema);
